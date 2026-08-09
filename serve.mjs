@@ -15,7 +15,7 @@ const types = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css',
 
 createServer(async (req, res) => {
   let p = decodeURIComponent(req.url.split('?')[0]);
-  if (p === '/') p = '/dist/castellan.html';
+  if (p === '/') p = '/index.html';
   const file = join(here, normalize(p).replace(/^(\.\.[/\\])+/, ''));
   try {
     const body = await readFile(file);

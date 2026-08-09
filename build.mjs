@@ -29,11 +29,11 @@ const bundle = files.map(f => readFileSync(join(jsDir, f), 'utf8')).join('');
 const html = shell.replace('/* @@BUNDLE@@ */', bundle) + '\n</script>\n</body>\n</html>\n';
 
 mkdirSync(join(here, 'dist'), { recursive: true });
-writeFileSync(join(here, 'dist', 'castellan.html'), html);
-writeFileSync(join(here, 'docs', 'index.html'), html);   // GitHub Pages serves /docs
+writeFileSync(join(here, 'index.html'), html);            // GitHub Pages serves the root
+writeFileSync(join(here, 'dist', 'castellan.html'), html); // the named, downloadable artifact
 
 const kb = (html.length / 1024).toFixed(1);
-console.log(`build: ${files.length} fragments → dist/castellan.html (${kb} kB)`);
+console.log(`build: ${files.length} fragments → index.html + dist/castellan.html (${kb} kB)`);
 
 if (process.argv.includes('--check')) {
   const problems = [];

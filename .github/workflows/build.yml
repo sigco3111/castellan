@@ -16,11 +16,11 @@ jobs:
           node-version: 20
       - name: Build and check the bundle
         run: node build.mjs --check
-      - name: Fail if dist is out of date
+      - name: Fail if the build output is out of date
         run: |
-          if ! git diff --quiet -- dist docs/index.html; then
-            echo "dist/castellan.html is stale — run 'npm run build' and commit the result."
-            git --no-pager diff --stat -- dist docs/index.html
+          if ! git diff --quiet -- index.html dist; then
+            echo "The build output is stale — run 'npm run build' and commit the result."
+            git --no-pager diff --stat -- index.html dist
             exit 1
           fi
       - uses: actions/upload-artifact@v4

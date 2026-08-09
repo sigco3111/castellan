@@ -13,7 +13,15 @@ synthesised from oscillators, and the holding's history is generated from the na
 
 ## Play it
 
-Open `dist/castellan.html` in a browser. That is the whole game.
+**In a browser, from GitHub Pages.** The repository root carries a built `index.html`, so
+turning Pages on publishes a playable build with no configuration — see
+[Publishing](#publishing) below.
+
+**From a file.** Open `index.html`, or the identical `dist/castellan.html`, in any browser.
+That is the whole game.
+
+> Clicking the `.html` file on github.com shows you the source, not the game — GitHub serves
+> repository files as text. Use Pages, or a raw HTML proxy such as `raw.githack.com`.
 
 To run it from a server instead — which you will want if you are editing it, because ES
 modules will not load over `file://`:
@@ -132,9 +140,9 @@ castellan/
 ├── src/
 │   ├── shell.html         document, styles, HUD markup, three.js loader
 │   └── js/                28 ordered fragments of one closure
-├── dist/castellan.html    the build — this is what you open
+├── index.html             the build, served at the root by GitHub Pages
+├── dist/castellan.html    the same build, named for downloading
 └── docs/
-    ├── index.html         the same build, for GitHub Pages
     ├── ARCHITECTURE.md
     ├── CONTROLS.md
     └── screenshots/
@@ -157,11 +165,16 @@ npm run check     # build, then verify braces balance and the closure closes
 
 ## Publishing
 
-`docs/index.html` is written by the build, so enabling GitHub Pages on the `main` branch with
-`/docs` as the source publishes the game with no further configuration.
+`index.html` at the repository root is written by the build, so:
 
-CI builds the bundle on every push and fails if `dist/` has drifted from `src/` — commit the
-build output along with your changes.
+**Settings → Pages → Source: Deploy from a branch → Branch: `main`, folder: `/ (root)`**
+
+That is the whole setup. The game will be live at
+`https://<user>.github.io/<repo>/` within a minute or two. A `.nojekyll` file is included so
+Pages serves the tree as-is rather than running it through Jekyll.
+
+CI builds the bundle on every push and fails if `index.html` or `dist/` has drifted from
+`src/` — commit the build output along with your changes.
 
 ---
 

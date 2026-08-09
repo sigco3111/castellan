@@ -13,8 +13,8 @@ npm start        # build and serve on http://localhost:8080
 npm run check    # build, balance braces, verify the closure closes
 ```
 
-Edit files in `src/`, never `dist/` or `docs/index.html` — both are written by the build.
-Commit the rebuilt output with your change; CI fails if `dist/` has drifted from `src/`.
+Edit files in `src/`, never `index.html` or `dist/castellan.html` — both are written by the
+build. Commit the rebuilt output with your change; CI fails if it has drifted from `src/`.
 
 ## Adding a piece
 

@@ -13,5 +13,5 @@
   },
   "engines": { "node": ">=18" },
   "keywords": ["threejs","webgl","castle","citybuilder","procedural","ecs","simulation"],
-  "files": ["dist","src","build.mjs","serve.mjs","README.md","LICENSE"]
+  "files": ["index.html","dist","src","build.mjs","serve.mjs","README.md","LICENSE"]
 }
