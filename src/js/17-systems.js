@@ -1,14 +1,14 @@
 /* ══════════════ 11 · the systems ══════════════ */
 const OFFICES=[
-  [0.0,'Deep night','Nothing moves but the watch and a dog that will not settle.'],
-  [4.4,'Lauds','Hearths are raked open. The first smoke goes up over the ward.'],
-  [6.0,'Prime','The gate opens and the field hands go out to the strips.'],
-  [8.6,'Terce','Stalls are up in the ward; the flock is out on the common.'],
-  [11.8,'Sext','Work stops at the well. The smith keeps hammering regardless.'],
-  [13.4,'None','Back to the strips. A cart works the road.'],
-  [17.0,'Vespers','Flocks come in, and the field folk head for the tavern.'],
-  [19.6,'Compline','Doors shut. Torches lit along the wall walk.'],
-  [21.4,'Night','Only the watch is abroad now, and the crows on the keep.']
+  [0.0,'깊은 밤','파수꾼과 자리를 못 잡는 개 한 마리만이 움직입니다.'],
+  [4.4,'새벽','화로를 갈무리합니다. 영지 위로 첫 연기가 오릅니다.'],
+  [6.0,'아침','성문이 열리고 밭일꾼들이 이랑으로 나갑니다.'],
+  [8.6,'오전','영지 안에 노점이 서고, 가축 떼는 공용목장에 나가 있습니다.'],
+  [11.8,'정오','우물가에서 일손을 놓습니다. 대장장이만은 아랑곳없이 망치질합니다.'],
+  [13.4,'오후','다시 이랑으로. 수레 하나가 길을 오갑니다.'],
+  [17.0,'저녁','가축이 돌아오고, 밭일꾼들은 주막으로 향합니다.'],
+  [19.6,'저녁 닫음','문이 닫힙니다. 성벽 위 순찰로에 횃불이 켜집니다.'],
+  [21.4,'밤','이제 파수꾼과 주성의 까마귀뿐입니다.']
 ];
 const officeFor=h=>{let o=OFFICES[0]; for(const e of OFFICES) if(h>=e[0]) o=e; return o;};
 const first=a=>a.length?a[0]:null;
@@ -353,4 +353,3 @@ class SyncSystem extends System{
     });
   }
 }
-
