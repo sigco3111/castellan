@@ -107,22 +107,22 @@ function onBridge(x,z){
 }
 
 
-let hour=9.0, running=false, pace=1, mode='build', perf=0, nightF=0, holdName='Aubemont';
+let hour=9.0, running=false, pace=1, mode='build', perf=0, nightF=0, holdName='아침언덕';
 const HOURS_PER_SEC=0.1;
 let season=1;
 const SEASONS=[
- {name:'Spring', dawn:5.6,dusk:19.2,grass:0x6f9048,dry:0x8fa055,leafA:0x4b7a38,leafB:0x5f8f3c,
+ {name:'봄', dawn:5.6,dusk:19.2,grass:0x6f9048,dry:0x8fa055,leafA:0x4b7a38,leafB:0x5f8f3c,
   orchard:0x93b06a,soil:0x6d5a37,crop:0x7fa04a,snow:0,
-  note:'Ground broken and sown. The bees are out and the days are lengthening.'},
- {name:'Summer', dawn:4.6,dusk:20.4,grass:0x6d8a45,dry:0x96984f,leafA:0x3d6a33,leafB:0x517a35,
+  note:'땅을 갈고 씨를 뿌립니다. 벌이 나돌고 낮이 길어집니다.'},
+ {name:'여름', dawn:4.6,dusk:20.4,grass:0x6d8a45,dry:0x96984f,leafA:0x3d6a33,leafB:0x517a35,
   orchard:0x5f8a3c,soil:0x6d5a37,crop:0x8b9448,snow:0,
-  note:'Long light. Everything that can be out of doors is out of doors.'},
- {name:'Harvest',dawn:6.2,dusk:18.4,grass:0x87904a,dry:0xa89a52,leafA:0x5a6b30,leafB:0x7a7434,
+  note:'긴 햇빛. 밖에 나갈 수 있는 것은 모두 밖에 있습니다.'},
+ {name:'수확철',dawn:6.2,dusk:18.4,grass:0x87904a,dry:0xa89a52,leafA:0x5a6b30,leafB:0x7a7434,
   orchard:0xb0862f,soil:0x6a5734,crop:0xc0a049,snow:0,
-  note:'No midday break until it is in. The field hands run the granary all afternoon.'},
- {name:'Winter', dawn:7.8,dusk:16.4,grass:0x7d8474,dry:0x8d9184,leafA:0x3a5236,leafB:0x44603a,
+  note:'거둬들이기 전까지 정오 휴식은 없습니다. 밭일꾼들이 오후 내내 곡물창고로 달립니다.'},
+ {name:'겨울', dawn:7.8,dusk:16.4,grass:0x7d8474,dry:0x8d9184,leafA:0x3a5236,leafB:0x44603a,
   orchard:0x6b5f4a,soil:0x6f6a5e,crop:0x8a8676,snow:0.78,
-  note:'Short light, stock kept in, and nobody outside who does not have to be.'}
+  note:'짧은 햇빛, 가축은 우리 안. 꼭 필요한 사람만 바깥에 있습니다.'}
 ];
 const SN=()=>SEASONS[season];
 /* the routines keep their shape; the working day is stretched or squeezed to fit the light */
@@ -138,4 +138,3 @@ function applySeason(){
   soilM.color.setHex(s.soil); cropM.color.setHex(s.crop);
   shapeTerrain();
 }
-
