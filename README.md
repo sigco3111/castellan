@@ -10,7 +10,21 @@
 
 원본 영문 README는 [README.en.md](README.en.md)에 그대로 보존해 두었습니다.
 
-![영지의 저녁 풍경 (원작 자료)](docs/screenshots/01-hero.png)
+![한글 배포본 시작 화면](https://github.com/user-attachments/assets/c6622790-dcf5-4d04-8cdc-7d54aae3c19a)
+
+---
+
+## 한글 배포본 화면
+
+아래 화면은 모두 이 저장소의 GitHub Pages 배포본에서 직접 캡처한 것입니다.
+
+| 건설 모드 | 하루 운영 |
+| --- | --- |
+| ![건설 모드와 건물 팔레트](https://github.com/user-attachments/assets/eb1cc2c0-5e26-479e-8a75-600f404b0835) | ![하루 운영 중인 영지](https://github.com/user-attachments/assets/400bfbff-db97-409d-b99a-ced10e6cb9ed) |
+
+| 영지 평가 리포트 | 연대기 |
+| --- | --- |
+| ![영지 평가 리포트](https://github.com/user-attachments/assets/39a5db16-4391-4502-8932-8476752bbc7c) | ![한글로 생성된 연대기](https://github.com/user-attachments/assets/a8c4a790-14a3-4893-89a5-7a1f54a6b512) |
 
 ---
 
@@ -94,4 +108,4 @@
 - 원작: [otakuch/castellan](https://github.com/otakuch/castellan), MIT License.
   라이선스 전문은 [LICENSE](LICENSE)에 있으며 원본 그대로입니다.
 - 이 포크의 번역 수정분도 동일한 MIT 라이선스를 따릅니다.
-- 이 README의 스크린샷은 원작 저장소의 자료(`docs/screenshots/`)를 사용했습니다.
+- 이 README의 스크린샷은 한글 배포본을 직접 캡처한 것입니다. 원작 저장소의 자료는 `docs/screenshots/`에 그대로 남아 있습니다.
