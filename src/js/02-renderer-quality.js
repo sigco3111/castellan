@@ -26,9 +26,9 @@ document.body.appendChild(renderer.domElement);
 /* ── device tier + quality presets (adaptive, and overridable) ── */
 const QUALITY={
   tiers:{
-    low :{label:'Low',   dpr:1,   shadow:0,    seg:140, pop:16, beasts:14, birds:4,  smoke:16, scenery:520},
-    mid :{label:'Medium',dpr:1.5, shadow:1024, seg:200, pop:32, beasts:28, birds:8,  smoke:40, scenery:1300},
-    high:{label:'High',  dpr:2,   shadow:2048, seg:260, pop:48, beasts:46, birds:12, smoke:72, scenery:2600}
+    low :{label:'낮음',   dpr:1,   shadow:0,    seg:140, pop:16, beasts:14, birds:4,  smoke:16, scenery:520},
+    mid :{label:'중간',dpr:1.5, shadow:1024, seg:200, pop:32, beasts:28, birds:8,  smoke:40, scenery:1300},
+    high:{label:'높음',  dpr:2,   shadow:2048, seg:260, pop:48, beasts:46, birds:12, smoke:72, scenery:2600}
   },
   auto:true, name:'high', detected:'high', now:null
 };
@@ -92,4 +92,3 @@ function applyCam(){
                       cam.tz+Math.cos(cam.yaw)*cp*cam.dist);
   camera.lookAt(cam.tx,cam.ty,cam.tz);
 }
-
