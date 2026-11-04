@@ -140,22 +140,22 @@ function report(){
   else{
     const fed=Math.round(plots*1.6);
     push('식량',fed>=souls?'ok':'thin',
-      souls+'명 중 약 <b>'+fed+'</b>명분의 밭과 과수원.'+
+      '주민 '+souls+'명에 약 <b>'+fed+'</b>명분의 밭과 과수원.'+
       (fed<souls?' 밭 하나면 격차를 메울 수 있습니다.':''));
   }
   push('빵집',idx.bakehouses.length?'ok':'thin',
-    idx.bakehouses.length?'빵굽는 집이 있어 정오에 집까지 걷지 않고 먹습니다.'
+    idx.bakehouses.length?'빵굽는 집이 있어 정오에 집까지 가지 않고 먹습니다.'
       :'빵굽는 집이 없습니다. 우물가에서 쉴 뿐입니다.');
   push('저장',idx.granaries.length?'ok':(plots?'thin':'ok'),
-    idx.granaries.length?'곡물창고가 수확을 받아들입니다.'
+    idx.granaries.length?'곡물창고가 수확을 거둬들입니다.'
       :(plots?'수확을 넣을 곳이 없습니다. <b>곡물창고는 기둥값을 합니다.</b>':'아직 저장할 것이 없습니다.'));
 
   if(!idx.wells.length) push('물','bad','우물이 없습니다. <b>정오가 되면 모든 일이 우물에서 멈춥니다.</b>');
   else{
     const near=doors.filter(d=>idx.wells.some(w=>Math.hypot(w.x-d.x,w.z-d.z)<34)).length;
     push('물',near===doors.length?'ok':'thin',
-      near===doors.length?'모든 문이 우물에서 적당한 거리에 있습니다.'
-        :doors.length+'채 중 <b>'+(doors.length-near)+'</b>채가 물에서 멉니다.');
+      near===doors.length?'모든 문이 우물에서 걸을 만한 거리에 있습니다.'
+        :'전체 '+doors.length+'채 중 <b>'+(doors.length-near)+'</b>채가 우물에서 멉니다.');
   }
   const segs=barriers();
   const inside=doors.filter(d=>enclosed(d,segs)).length;
@@ -168,7 +168,7 @@ function report(){
     idx.towers.length?'탑 '+idx.towers.length+'개, 성벽 위 파수 '+idx.towers.length+'명.'
       :'탑이 없어 파수도 없습니다.');
   push('성문',!idx.walls.length?'ok':(idx.gates.length?'ok':'bad'),
-    !idx.walls.length?'지나갈 곳이 없습니다.'
+    !idx.walls.length?'성벽이 없어 성문도 필요 없습니다.'
       :(idx.gates.length?'성문이 있어 모두가 그곳으로 다닙니다.'
         :'<b>성문 없는 성벽.</b> 사람들이 돌을 뚫고 지나다니게 됩니다.'));
   push('가축',idx.pens.length?'ok':'thin',
