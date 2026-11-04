@@ -10,8 +10,8 @@ function setBare(v){
   bare=v;
   $('hud').classList.toggle('bare',v);
   const btn=$('bare');
-  btn.textContent=v?'Show':'Hide';
-  btn.title=v?'Bring the panels back (H)':'Hide the panels (H)';
+  btn.textContent=v?'보이기':'숨기기';
+  btn.title=v?'패널 다시 보이기 (H)':'패널 숨기기 (H)';
   btn.setAttribute('aria-pressed',String(v));
   updateMarkers();
   if(v){
@@ -29,7 +29,7 @@ function setName(n){
 }
 
 (function marks(){
-  [[2,'Matins'],[5,'Lauds'],[6,'Prime'],[9,'Terce'],[12,'Sext'],[15,'None'],[18,'Vespers'],[21,'Compline']]
+  [[2,'깊은 밤'],[5,'새벽'],[6,'아침'],[9,'오전'],[12,'정오'],[15,'오후'],[18,'저녁'],[21,'저녁 닫음']]
   .forEach(m=>{
     const d=document.createElement('div'); d.className='mark';
     d.style.left=(m[0]/24*100)+'%'; d.innerHTML='<b>'+m[1]+'</b>';
@@ -43,7 +43,7 @@ function setName(n){
     const toGround=(gname==='Ground');
     const row=document.createElement('div'); row.className='group';
     const lab=document.createElement('span'); lab.className='glab';
-    lab.textContent=toGround?'Brushes':gname;
+    lab.textContent=toGround?'지형 붓':({Defence:'방어',Dwelling:'주거',Work:'생산',Land:'조경'})[gname]||gname;
     row.appendChild(lab);
     groups[gname].forEach(k=>{
       const btn=document.createElement('button');
@@ -60,7 +60,7 @@ function setName(n){
     allTools().forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.k===k)));
     brushRing.visible=false;
     makeGhost(); updateMarkers();
-    say(PIECES[k].tip||('Click the ground to place a '+PIECES[k].label.toLowerCase()+'.'));
+    say(PIECES[k].tip||('땅을 클릭해 배치하세요: '+PIECES[k].label));
   }
   const onClick=e=>{ const btn=e.target.closest('.tool'); if(btn) choose(btn.dataset.k); };
   elTools.addEventListener('click',onClick);
@@ -88,10 +88,10 @@ function setTab(t){
     window.__choose(isSculpt()?lastPiece:tool);
   }else if(t==='holding'){
     drawReport();
-    say('What the holding has and what it is short of. It updates as you build.');
+    say('영지가 무엇을 갖췄고 무엇이 모자란지 보여줍니다. 지을 때마다 갱신됩니다.');
   }else{
     drawChronicle();
-    say('The chronicle of '+holdName+'. It writes itself as you build.');
+    say(holdName+'의 연대기입니다. 지을 때마다 스스로 써 내려갑니다.');
   }
   updateMarkers();
 }
@@ -132,55 +132,54 @@ function report(){
     idx.taverns.map(r=>r.meta.door),idx.keeps.map(r=>r.meta.door));
   const push=(lab,state,txt)=>rows.push({lab:lab,state:state,txt:txt});
 
-  if(!dwell) push('Roof','bad','Nobody lives here yet. <b>A cottage houses two.</b>');
-  else push('Roof',souls>=8?'ok':'thin',
-    'Room for <b>'+souls+'</b> under '+dwell+' roof'+(dwell>1?'s':'')+'.');
+  if(!dwell) push('지붕','bad','아직 사는 사람이 없습니다. <b>오두막 한 채에 두 명이 삽니다.</b>');
+  else push('지붕',souls>=8?'ok':'thin',
+    dwell+'채 지붕 아래 <b>'+souls+'</b>명이 살 수 있습니다.');
 
-  if(!plots) push('Bread','bad','No ground under crop. <b>A field feeds about six.</b>');
+  if(!plots) push('식량','bad','곡식을 심은 땅이 없습니다. <b>밭 하나가 약 여섯 명을 먹입니다.</b>');
   else{
     const fed=Math.round(plots*1.6);
-    push('Bread',fed>=souls?'ok':'thin',
-      'Field and orchard for about <b>'+fed+'</b> of '+souls+'.'+
-      (fed<souls?' Another field would close the gap.':''));
+    push('식량',fed>=souls?'ok':'thin',
+      souls+'명 중 약 <b>'+fed+'</b>명분의 밭과 과수원.'+
+      (fed<souls?' 밭 하나면 격차를 메울 수 있습니다.':''));
   }
-  push('Oven',idx.bakehouses.length?'ok':'thin',
-    idx.bakehouses.length?'A bakehouse, so they eat at midday rather than walk home.'
-      :'No bakehouse. They break at the well instead.');
-  push('Store',idx.granaries.length?'ok':(plots?'thin':'ok'),
-    idx.granaries.length?'A granary takes the harvest in.'
-      :(plots?'Nothing to put the harvest in. <b>A granary is worth its posts.</b>':'Nothing to store yet.'));
+  push('빵집',idx.bakehouses.length?'ok':'thin',
+    idx.bakehouses.length?'빵굽는 집이 있어 정오에 집까지 걷지 않고 먹습니다.'
+      :'빵굽는 집이 없습니다. 우물가에서 쉴 뿐입니다.');
+  push('저장',idx.granaries.length?'ok':(plots?'thin':'ok'),
+    idx.granaries.length?'곡물창고가 수확을 받아들입니다.'
+      :(plots?'수확을 넣을 곳이 없습니다. <b>곡물창고는 기둥값을 합니다.</b>':'아직 저장할 것이 없습니다.'));
 
-  if(!idx.wells.length) push('Water','bad','No well. <b>Everything stops at the well at midday.</b>');
+  if(!idx.wells.length) push('물','bad','우물이 없습니다. <b>정오가 되면 모든 일이 우물에서 멈춥니다.</b>');
   else{
     const near=doors.filter(d=>idx.wells.some(w=>Math.hypot(w.x-d.x,w.z-d.z)<34)).length;
-    push('Water',near===doors.length?'ok':'thin',
-      near===doors.length?'Every door is within a fair walk of a well.'
-        :'<b>'+(doors.length-near)+'</b> of '+doors.length+' doors are a long way from water.');
+    push('물',near===doors.length?'ok':'thin',
+      near===doors.length?'모든 문이 우물에서 적당한 거리에 있습니다.'
+        :doors.length+'채 중 <b>'+(doors.length-near)+'</b>채가 물에서 멉니다.');
   }
   const segs=barriers();
   const inside=doors.filter(d=>enclosed(d,segs)).length;
-  push('Walls',!idx.walls.length?'bad':(inside>=Math.ceil(doors.length*0.6)?'ok':'thin'),
-    !idx.walls.length?'Open ground. <b>Nothing is enclosed.</b>'
-      :(inside===doors.length?'Every dwelling stands inside the circuit.'
-        :'<b>'+inside+'</b> of '+doors.length+' dwellings are inside the circuit; '+
-          (doors.length-inside)+' stand out in the open.'));
-  push('Watch',idx.towers.length?'ok':'thin',
-    idx.towers.length?idx.towers.length+' tower'+(idx.towers.length>1?'s':'')+
-      ', so '+idx.towers.length+' on the wall walk.'
-      :'No towers, so no watch at all.');
-  push('Gate',!idx.walls.length?'ok':(idx.gates.length?'ok':'bad'),
-    !idx.walls.length?'Nothing to pass through.'
-      :(idx.gates.length?'A gatehouse, and everyone routes through it.'
-        :'<b>Walls with no gatehouse.</b> They will walk straight through the stone.'));
-  push('Beasts',idx.pens.length?'ok':'thin',
-    idx.pens.length?idx.pens.length+' pen'+(idx.pens.length>1?'s':'')+' out to the common by day.'
-      :'No pens, so no flock.');
-  push('Trade',idx.stalls.length?'ok':'thin',
-    idx.stalls.length?idx.stalls.length+' stall'+(idx.stalls.length>1?'s':'')+' up through the day.'
-      :'No stalls in the ward.');
-  push('Souls',idx.chapels.length||idx.taverns.length?'ok':'thin',
-    (idx.chapels.length?'A chapel, and monks to keep the hours. ':'No chapel. ')+
-    (idx.taverns.length?'A tavern for the evening.':'Nowhere to go after Vespers.'));
+  push('성벽',!idx.walls.length?'bad':(inside>=Math.ceil(doors.length*0.6)?'ok':'thin'),
+    !idx.walls.length?'탁 트인 땅. <b>둘러싸인 것이 없습니다.</b>'
+      :(inside===doors.length?'모든 가옥이 성벽 안쪽에 있습니다.'
+        :doors.length+'채 중 <b>'+inside+'</b>채가 성벽 안쪽, '+
+          (doors.length-inside)+'채는 밖에 서 있습니다.'));
+  push('파수',idx.towers.length?'ok':'thin',
+    idx.towers.length?'탑 '+idx.towers.length+'개, 성벽 위 파수 '+idx.towers.length+'명.'
+      :'탑이 없어 파수도 없습니다.');
+  push('성문',!idx.walls.length?'ok':(idx.gates.length?'ok':'bad'),
+    !idx.walls.length?'지나갈 곳이 없습니다.'
+      :(idx.gates.length?'성문이 있어 모두가 그곳으로 다닙니다.'
+        :'<b>성문 없는 성벽.</b> 사람들이 돌을 뚫고 지나다니게 됩니다.'));
+  push('가축',idx.pens.length?'ok':'thin',
+    idx.pens.length?'우리 '+idx.pens.length+'곳, 낮에는 공용목장으로 나갑니다.'
+      :'우리가 없어 가축도 없습니다.');
+  push('장사',idx.stalls.length?'ok':'thin',
+    idx.stalls.length?'노점 '+idx.stalls.length+'곳이 하루 종일 서 있습니다.'
+      :'영지에 노점이 없습니다.');
+  push('신앙',idx.chapels.length||idx.taverns.length?'ok':'thin',
+    (idx.chapels.length?'예배당과 시간을 지키는 수도사들. ':'예배당이 없습니다. ')+
+    (idx.taverns.length?'저녁의 주막.':'저녁기도 후 갈 곳이 없습니다.'));
 
   const score=Math.round(100*rows.reduce((s,r)=>s+(r.state==='ok'?1:(r.state==='thin'?0.45:0)),0)/rows.length);
   return {rows:rows,score:score};
@@ -195,7 +194,7 @@ function drawReport(){
 }
 function refreshCensus(){
   if(mode==='build'){
-    elK[0].textContent='Homes'; elK[1].textContent='Works'; elK[2].textContent='Defence';
+    elK[0].textContent='가옥'; elK[1].textContent='생산'; elK[2].textContent='방어';
     elN[0].textContent=idx.cottages.length+idx.halls.length+idx.taverns.length+idx.keeps.length;
     elN[1].textContent=idx.fields.length+idx.orchards.length+idx.stalls.length+idx.wells.length+
                        idx.smithies.length+idx.mills.length+idx.chapels.length+idx.pens.length+
@@ -204,7 +203,7 @@ function refreshCensus(){
     elN[2].textContent=idx.walls.length+idx.towers.length+idx.gates.length+
                        idx.butts.length+idx.beacons.length;
   }else{
-    elK[0].textContent='Souls'; elK[1].textContent='Beasts'; elK[2].textContent='Abroad';
+    elK[0].textContent='주민'; elK[1].textContent='가축'; elK[2].textContent='외출';
     let souls=0,abroad=0;
     world.query([C.HUMAN,C.RENDER,C.TRANSFORM]).forEach(e=>{
       if(!world.get(e,C.RENDER).visible) return;
@@ -221,12 +220,12 @@ function refreshCensus(){
 function setSeal(){
   if(mode==='build'){
     elRun.classList.remove('running');
-    elRun.innerHTML='Run<br>the day<span class="sub">Building</span>';
+    elRun.innerHTML='하루<br>시작<span class="sub">건설 중</span>';
     elRun.setAttribute('aria-pressed','false');
   }else{
     elRun.classList.toggle('running',running);
-    elRun.innerHTML=(running?'Hold<br>the day':'Run<br>the day')+
-      '<span class="sub">'+(running?'Running':'Held')+'</span>';
+    elRun.innerHTML=(running?'하루<br>멈춤':'하루<br>시작')+
+      '<span class="sub">'+(running?'진행 중':'멈춤')+'</span>';
     elRun.setAttribute('aria-pressed',String(running));
   }
 }
@@ -236,20 +235,20 @@ function setMode(m){
   const build=(m==='build');
   elWork.hidden=!build;
   updateMarkers();
-  elSite.textContent=build?'Building':'The day of it';
-  elHint.textContent=build?'Click ground to place · , . to turn or flip · Z to undo'
-                          :'Drag to orbit · wheel to zoom · space to hold';
+  elSite.textContent=build?'건설 중':'하루 풍경';
+  elHint.textContent=build?'땅 클릭 배치 · , . 회전/뒤집기 · Z 실행 취소'
+                          :'드래그 회전 · 휠 확대 · 스페이스 멈춤';
   [...$('modes').children].forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.m===m)));
   if(build){
     clearPop(); running=false; makeGhost();
-    say(tab==='terrain'?'Drag with a brush to cut the ground.'
-                       :'Pick something from the palette, then click the ground to place it.');
+    say(tab==='terrain'?'붓으로 드래그해 땅을 깎습니다.'
+                       :'팔레트에서 집을 고른 뒤 땅을 클릭해 배치하세요.');
   }else{
     if(ghost)ghost.visible=false;
     lineGhost.visible=false; ghostArrow.visible=false; brushRing.visible=false;
     indexBuild(); buildPop(); world.singletons.clock.bucket=-1; retask(); running=true;
     say(world.count(C.HUMAN)?officeFor(hour)[2]
-      :'Nothing here to run yet. Go back and place a cottage or two.');
+      :'아직 돌릴 것이 없습니다. 돌아가서 오두막 한두 채를 지어 보세요.');
   }
   setSeal(); refreshCensus();
 }
@@ -272,9 +271,9 @@ $('music').addEventListener('click',e=>{
   const b=e.target.closest('button'); if(!b) return;
   const v=parseFloat(b.dataset.v);
   [...e.currentTarget.children].forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
-  if(v<=0){ Music.stop(); say('Music off.'); }
-  else if(!Music.start(v)) say('This browser will not give me any sound.');
-  else say(v<0.5?'Music, softly.':'Music on. It follows the hour and the season.');
+  if(v<=0){ Music.stop(); say('음악을 껐습니다.'); }
+  else if(!Music.start(v)) say('이 브라우저에서는 소리를 낼 수 없습니다.');
+  else say(v<0.5?'음악, 작게.':'음악이 켜졌습니다. 시각과 계절을 따라갑니다.');
 });
 $('season').addEventListener('click',e=>{
   const b=e.target.closest('button'); if(!b) return;
@@ -297,22 +296,22 @@ function regenerate(msg,keepEdits){
 }
 $('newland').addEventListener('click',()=>{
   land.seed=Math.floor(Math.random()*1e9); seedNoise(land.seed);
-  regenerate('New ground, and nothing on it. Everything you had built is gone.');
+  regenerate('새 땅입니다. 지었던 것은 모두 사라졌습니다.');
 });
 $('preset').addEventListener('click',()=>{
   if(mode==='run') setMode('build');
-  preset(); say('The standard plan, laid out. Change anything you like, then run the day.');
+  preset(); say('기본 설계가 놓였습니다. 마음대로 바꾼 뒤 하루를 돌려 보세요.');
 });
 $('clear').addEventListener('click',()=>{
   clearBuild(); indexBuild();
   if(mode==='run') setMode('build');
-  say('Cleared. The valley is yours again.');
+  say('모두 지웠습니다. 계곡은 다시 당신의 것입니다.');
 });
 $('mount').addEventListener('click',e=>{
   land.mount=!land.mount;
   e.currentTarget.setAttribute('aria-pressed',String(land.mount));
-  regenerate(land.mount?'A mount with a wet ditch round it. Bridge it to get in.'
-                       :'Flat ground, no ditch. You make your own defences now.',true);
+  regenerate(land.mount?'언덕과 물 해자가 둘렸습니다. 다리를 놓아야 드나들 수 있습니다.'
+                       :'평지에 해자 없음. 방어는 이제 직접 만드셔야 합니다.',true);
 });
 $('relief').addEventListener('input',e=>{
   land.relief=parseFloat(e.target.value);
@@ -320,7 +319,7 @@ $('relief').addEventListener('input',e=>{
 });
 $('relief').addEventListener('change',()=>{
   const had=placed.length;
-  regenerate(had?'The land re-cut, so what stood on it had to come down.':'The land re-cut.',true);
+  regenerate(had?'땅을 다시 깎아, 그 위에 서 있던 것들이 무너졌습니다.':'땅을 다시 깎았습니다.',true);
 });
 $('brush').addEventListener('input',e=>{ brush=parseFloat(e.target.value); });
 $('waterlvl').addEventListener('input',e=>{
@@ -328,12 +327,12 @@ $('waterlvl').addEventListener('input',e=>{
 });
 $('waterlvl').addEventListener('change',()=>{
   rebuildAll(); reseatScenery(); indexBuild();
-  say(WATER>-1.2?'The water is high. Much of the low ground is gone.'
-                :'Water level set. Anything below it is under.');
+  say(WATER>-1.2?'물이 높습니다. 낮은 땅이 많이 잠겼습니다.'
+                :'수위를 정했습니다. 그 아래는 물에 잠깁니다.');
 });
 $('resetcuts').addEventListener('click',()=>{
   EDIT.fill(0); shapeTerrain(); rebuildAll(); reseatScenery(); indexBuild();
-  say('Your cuts are undone. The ground is as it was generated.');
+  say('깎은 흔적이 되돌려졌습니다. 땅은 생성된 그대로입니다.');
 });
 $('rename').addEventListener('click',()=>{
   if(elTitle.querySelector('#retitle')) return;
@@ -448,11 +447,11 @@ function ringBell(){
   const nxt=OFFICES.find(o=>o[0]>hour+0.02);
   hour=nxt?nxt[0]:0.0;
   if(mode==='run') retask();
-  say('The bell rings for '+officeFor(hour)[1]+'.');
+  say(officeFor(hour)[1]+'을(를) 알리는 종이 울립니다.');
 }
 function setPhoto(v){
   photo=v; setBare(v); if(!v) camAuto=0;
-  say(v?'Photo mode — the camera drifts. P or Esc to come back.':'Back to work.');
+  say(v?'사진 모드 - 카메라가 떠다닙니다. P 또는 Esc로 돌아옵니다.':'다시 작업으로.');
 }
 addEventListener('keyup',e=>{ keys[e.code]=false; });
 addEventListener('blur',()=>{ for(const k in keys) keys[k]=false; });
@@ -467,8 +466,8 @@ addEventListener('keydown',e=>{
   if(k==='Escape'){
     if(keysOpen){ toggleKeys(false); return; }
     if(photo){ setPhoto(false); return; }
-    if(anchor){ anchor=null; lineGhost.visible=false; ghostArrow.visible=false; say('Cancelled.'); return; }
-    if(mode==='run'){ running=!running; setSeal(); say(running?'Running.':'Held.'); }
+    if(anchor){ anchor=null; lineGhost.visible=false; ghostArrow.visible=false; say('취소했습니다.'); return; }
+    if(mode==='run'){ running=!running; setSeal(); say(running?'진행 중.':'멈췄습니다.'); }
     return;
   }
   if(e.code==='Space'&&e.target.tagName!=='BUTTON'){
@@ -483,7 +482,7 @@ addEventListener('keydown',e=>{
   if(k==='['){ sizeBy(-1); return; }
   if(k===']'){ sizeBy(1); return; }
   if(k===','||k==='.'){
-    if(def&&def.line){ ghostFlip=!ghostFlip; say('Parapet on the other side now.'); }
+    if(def&&def.line){ ghostFlip=!ghostFlip; say('난간이 반대쪽으로 바뀌었습니다.'); }
     else { ghostRot+=(k===','?-1:1)*(e.shiftKey?PI/36:PI/12); makeGhost(); }
   }
 });
@@ -507,6 +506,5 @@ function hud(dt){
   const info=renderer.info.render;
   elPerf.textContent=Math.round(fps)+' fps · '+info.calls+' calls · '+QUALITY.now.label.toLowerCase();
 }
-
 
 
