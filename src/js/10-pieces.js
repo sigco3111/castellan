@@ -412,41 +412,41 @@ function makeBeacon(x,z){
 }
 
 const PIECES={
-  raise  :{label:'Raise',     group:'Ground',  sculpt:'raise', dig:true, tip:'Drag on the ground to pull it up. Shift-drag still turns the camera.'},
-  lower  :{label:'Lower',     group:'Ground',  sculpt:'lower', dig:true, tip:'Drag to press the ground down. Cut below the water line and it floods.'},
-  flat   :{label:'Flatten',   group:'Ground',  sculpt:'flat',  dig:true, tip:'The first point you touch sets the level; drag to bring the rest to it.'},
-  smoothT:{label:'Smooth',    group:'Ground',  sculpt:'smooth',dig:true, tip:'Softens whatever you have just cut.'},
-  wall   :{label:'Wall',      group:'Defence', line:true, flipk:true, tip:'Click for the start of the wall, then its end. , or . flips which side the parapet faces.'},
-  tower  :{label:'Tower',     group:'Defence', r:3.4, tip:'Towers carry the watch — one guard each, and a torch at night.'},
-  gate   :{label:'Gatehouse', group:'Defence', r:5.0, rot:true, tip:'The only way through a wall. The arrow points out; turn it with , and .'},
-  keep   :{label:'Keep',      group:'Defence', r:8.0, rot:true, tip:'The lord lives here, and the crows above him. The arrow marks the door.'},
-  cottage:{label:'Cottage',   group:'Dwelling',r:3.4, rot:true, tip:'Two to a cottage, and smoke over the ward. The arrow is the door.'},
-  hall   :{label:'Hall',      group:'Dwelling',r:5.0, rot:true, tip:'Hall and stable. Horses stand in the yard behind it.'},
-  tavern :{label:'Tavern',    group:'Dwelling',r:4.6, rot:true, tip:'Where the field folk and traders go between Vespers and dark.'},
-  chapel :{label:'Chapel',    group:'Dwelling',r:4.4, rot:true, tip:'A chapel gives you monks, who keep the hours.'},
-  smithy :{label:'Smithy',    group:'Work',    r:3.4, rot:true, tip:'The smith works the forge from Prime to Compline.'},
-  bakehouse:{label:'Bakehouse',group:'Work',   r:3.6, rot:true, tip:'A baker, and bread at the well by Sext. Keep it clear of the thatch.'},
-  granary:{label:'Granary',   group:'Work',    r:4.0, rot:true, tip:'Raised on staddle stones. What the fields bring in ends up here.'},
-  garden :{label:'Garden',    group:'Work',    r:4.4, rot:true, tip:'Herb beds, and a herbwife to keep them.'},
-  beehive:{label:'Beehives',  group:'Work',    r:2.4, rot:true, tip:'Skeps on a bench. Tended in the warm months only.'},
-  jetty  :{label:'Jetty',     group:'Work',    r:5.0, rot:true, water:true, tip:'Runs out over the water. Point it at the deep and a fisher will work it.'},
-  mill   :{label:'Mill',      group:'Work',    r:4.0, rot:true, tip:'Sails turn with the wind, and a miller works beneath them.'},
-  stall  :{label:'Stall',     group:'Work',    r:2.2, rot:true, tip:'One trader per stall. The arrow is the side they stand.'},
-  well   :{label:'Well',      group:'Work',    r:1.8, tip:'Work stops at the well at midday.'},
-  field  :{label:'Field',     group:'Work',    r:8.0, rot:true, tip:'Ploughed strips. Each field puts three more hands in the fields.'},
-  orchard:{label:'Orchard',   group:'Work',    r:7.0, rot:true, tip:'Fruit trees in rows. Worked like a field.'},
-  pen    :{label:'Pen',       group:'Work',    r:5.5, rot:true, tip:'Sheep, cattle and pigs. The arrow marks the gap they file through.'},
-  dovecote:{label:'Dovecote',  group:'Dwelling',r:3.2, rot:true, tip:'Doves in the eaves, circling all day and roosting on the cap.'},
-  butts  :{label:'Butts',     group:'Defence', r:5.0, rot:true, tip:'Archery marks. Off-duty guards come here to shoot.'},
-  beacon :{label:'Beacon',    group:'Defence', r:2.2, tip:'A fire basket on a pole. It burns from dusk to dawn.'},
-  path   :{label:'Path',      group:'Land',    line:true, tip:'Click both ends. A trodden track, and nothing more.'},
-  fence  :{label:'Fence',     group:'Land',    line:true, tip:'Click one end of the fence, then the other.'},
-  bridge :{label:'Bridge',    group:'Land',    line:true, tip:'Click both banks. Without one, nobody crosses the water.'},
-  tree   :{label:'Tree',      group:'Land',    r:1.8},
-  bush   :{label:'Bush',      group:'Land',    r:1.2},
-  hay    :{label:'Haystack',  group:'Land',    r:1.8},
-  cross  :{label:'Cross',     group:'Land',    r:2.4, tip:'A market cross. It does nothing, which is rather the point.'},
-  remove :{label:'Remove',    group:'Land',    warn:true, tip:'Click anything you have placed to take it away again.'}
+  raise  :{label:'올리기',     group:'Ground',  sculpt:'raise', dig:true, tip:'땅을 드래그해 끌어올립니다. Shift+드래그는 여전히 카메라를 돌립니다.'},
+  lower  :{label:'내리기',     group:'Ground',  sculpt:'lower', dig:true, tip:'드래그해 땅을 눌러 낮춥니다. 수위 아래로 파면 물이 찹니다.'},
+  flat   :{label:'평탄하게',   group:'Ground',  sculpt:'flat',  dig:true, tip:'처음 닿은 지점이 기준 높이가 됩니다. 드래그해 나머지를 맞춥니다.'},
+  smoothT:{label:'다듬기',    group:'Ground',  sculpt:'smooth',dig:true, tip:'방금 깎은 곳을 부드럽게 합니다.'},
+  wall   :{label:'성벽',      group:'Defence', line:true, flipk:true, tip:'시작점을 클릭하고 끝점을 클릭하세요. , 또는 . 로 난간이 향하는 쪽을 바꿉니다.'},
+  tower  :{label:'망루',     group:'Defence', r:3.4, tip:'탑에는 파수꾼이 하나씩 오르고, 밤에는 횃불이 켜집니다.'},
+  gate   :{label:'성문', group:'Defence', r:5.0, rot:true, tip:'성벽을 지나는 유일한 길. 화살표가 바깥을 가리키며, , 와 . 로 돌립니다.'},
+  keep   :{label:'주성',      group:'Defence', r:8.0, rot:true, tip:'영주가 사는 곳, 그 위로 까마귀가 돕니다. 화살표가 문을 가리킵니다.'},
+  cottage:{label:'오두막',   group:'Dwelling',r:3.4, rot:true, tip:'한 채에 두 명. 영지 위로 연기가 오릅니다. 화살표가 문입니다.'},
+  hall   :{label:'대저택',      group:'Dwelling',r:5.0, rot:true, tip:'대저택과 마구간. 말들이 뒤뜰에 섭니다.'},
+  tavern :{label:'주막',    group:'Dwelling',r:4.6, rot:true, tip:'저녁기도 후부터 어두워질 때까지 밭일꾼과 상인이 모이는 곳.'},
+  chapel :{label:'예배당',    group:'Dwelling',r:4.4, rot:true, tip:'예배당을 지으면 시간을 지키는 수도사들이 생깁니다.'},
+  smithy :{label:'대장간',    group:'Work',    r:3.4, rot:true, tip:'대장장이는 아침 기도부터 밤 기도까지 화로를 두드립니다.'},
+  bakehouse:{label:'빵굽는 집',group:'Work',   r:3.6, rot:true, tip:'제빵사가 있으면 정오에 우물가에서 빵을 먹습니다. 초가지붕과는 거리를 두세요.'},
+  granary:{label:'곡물창고',   group:'Work',    r:4.0, rot:true, tip:'쥐 방지 받침돌 위에 지은 창고. 밭에서 거둔 것이 모두 여기로 옵니다.'},
+  garden :{label:'약초밭',    group:'Work',    r:4.4, rot:true, tip:'약초 이랑과 그것을 돌보는 약초 할멈.'},
+  beehive:{label:'벌통',  group:'Work',    r:2.4, rot:true, tip:'벤치 위의 벌통. 따뜻한 달에만 돌봅니다.'},
+  jetty  :{label:'부교',     group:'Work',    r:5.0, rot:true, water:true, tip:'물 위로 뻗어나갑니다. 깊은 쪽을 향하게 하면 어부가 일합니다.'},
+  mill   :{label:'방앗간',      group:'Work',    r:4.0, rot:true, tip:'바람에 날개가 돌고, 아래에서 방앗간 주인이 일합니다.'},
+  stall  :{label:'노점',     group:'Work',    r:2.2, rot:true, tip:'노점 하나에 상인 하나. 화살표가 상인이 서는 쪽입니다.'},
+  well   :{label:'우물',      group:'Work',    r:1.8, tip:'정오가 되면 일손이 우물에서 멈춥니다.'},
+  field  :{label:'밭',     group:'Work',    r:8.0, rot:true, tip:'갈아엎은 이랑. 밭 하나가 일손 셋을 더 부립니다.'},
+  orchard:{label:'과수원',   group:'Work',    r:7.0, rot:true, tip:'줄지어 심은 과수. 밭처럼 일굽니다.'},
+  pen    :{label:'가축 우리',       group:'Work',    r:5.5, rot:true, tip:'양, 소, 돼지. 화살표가 가축이 지나는 입구입니다.'},
+  dovecote:{label:'비둘기집',  group:'Dwelling',r:3.2, rot:true, tip:'처마의 비둘기. 하루 종일 빙빙 돌다 꼭대기에 듭니다.'},
+  butts  :{label:'활터',     group:'Defence', r:5.0, rot:true, tip:'활 과녁. 비번 경비가 이곳에서 쏩니다.'},
+  beacon :{label:'봉화대',    group:'Defence', r:2.2, tip:'장대 위의 화로. 해 질 녘부터 새벽까지 탑니다.'},
+  path   :{label:'오솔길',      group:'Land',    line:true, tip:'양 끝을 클릭하세요. 사람이 다져 놓은 길, 그 이상도 아닙니다.'},
+  fence  :{label:'울타리',     group:'Land',    line:true, tip:'울타리 한쪽 끝을 클릭하고 다른 쪽 끝을 클릭하세요.'},
+  bridge :{label:'다리',    group:'Land',    line:true, tip:'양쪽 강변을 클릭하세요. 다리가 없으면 아무도 물을 건너지 못합니다.'},
+  tree   :{label:'나무',      group:'Land',    r:1.8},
+  bush   :{label:'관목',      group:'Land',    r:1.2},
+  hay    :{label:'건초더미',  group:'Land',    r:1.8},
+  cross  :{label:'십자가',     group:'Land',    r:2.4, tip:'장터 십자가. 아무 쓸모가 없는데, 그게 요점입니다.'},
+  remove :{label:'제거',    group:'Land',    warn:true, tip:'지어 놓은 것을 클릭해 치웁니다.'}
 };
 const MAKERS={tower:makeTower,gate:makeGate,keep:makeKeep,cottage:makeCottage,hall:makeHall,
   granary:makeGranary,bakehouse:makeBakehouse,dovecote:makeDovecote,beehive:makeBeehive,
@@ -591,11 +591,10 @@ function sizeBy(dir){
   if(isSculpt()){
     brush=clamp(brush+dir*1.5,4,26);
     const sl=$('brush'); if(sl) sl.value=brush;
-    say('Brush '+Math.round(brush)+'.');
+    say('붓 크기 '+Math.round(brush)+'.');
   }else if(PIECES[tool]&&!PIECES[tool].line&&tool!=='remove'){
     ghostScale=clamp(+(ghostScale+dir*0.08).toFixed(2),0.6,1.7);
-    say(PIECES[tool].label+' at '+Math.round(ghostScale*100)+' per cent.');
+    say(PIECES[tool].label+' 크기 '+Math.round(ghostScale*100)+'%.');
   }
 }
-
 
