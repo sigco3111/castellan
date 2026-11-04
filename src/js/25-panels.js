@@ -3,13 +3,13 @@
    the layout put it, and from then on it can be dragged, folded or put away.  */
 const Panels=(function(){
   const LIST=[
-    {id:'p-name',    label:'Name'},
-    {id:'census',    label:'Census'},
-    {id:'workbench', label:'Tools'},
-    {id:'band',      label:'Time'},
-    {id:'p-ctrl',    label:'Controls'},
-    {id:'run',       label:'Seal', bare:true},
-    {id:'bare',      label:'Hide', bare:true, noChip:true}
+    {id:'p-name',    label:'이름'},
+    {id:'census',    label:'현황'},
+    {id:'workbench', label:'도구'},
+    {id:'band',      label:'시각'},
+    {id:'p-ctrl',    label:'설정'},
+    {id:'run',       label:'하루', bare:true},
+    {id:'bare',      label:'숨기기', bare:true, noChip:true}
   ];
   let ready=false;
   const el=p=>document.getElementById(p.id);
@@ -19,10 +19,10 @@ const Panels=(function(){
     h.className='phead';
     h.innerHTML='<span class="grip"></span><span class="ptitle">'+p.label+'</span>';
     const fold=document.createElement('button');
-    fold.type='button'; fold.textContent='–'; fold.title='Fold this panel';
+    fold.type='button'; fold.textContent='–'; fold.title='이 패널 접기';
     fold.addEventListener('click',e=>{ e.stopPropagation(); collapse(p); });
     const shut=document.createElement('button');
-    shut.type='button'; shut.textContent='×'; shut.title='Put this panel away';
+    shut.type='button'; shut.textContent='×'; shut.title='이 패널 치우기';
     shut.addEventListener('click',e=>{ e.stopPropagation(); show(p,false); });
     h.appendChild(fold); h.appendChild(shut);
     p.node.insertBefore(h,p.node.firstChild);
@@ -98,16 +98,16 @@ const Panels=(function(){
       const b=document.createElement('button');
       b.type='button'; b.dataset.p=p.id; b.textContent=p.label;
       b.setAttribute('aria-pressed','true');
-      b.title='Show or hide the '+p.label.toLowerCase()+' panel';
+      b.title=p.label+' 패널 보이기/숨기기';
       d.appendChild(b);
     });
     const q=document.createElement('button');
-    q.type='button'; q.textContent='Keys'; q.title='The full list of controls (?)';
+    q.type='button'; q.textContent='단축키'; q.title='조작법 전체 목록 (?)';
     q.addEventListener('click',ev=>{ ev.stopPropagation(); toggleKeys(true); });
     d.appendChild(q);
     const r=document.createElement('button');
-    r.type='button'; r.className='reset'; r.textContent='Reset';
-    r.title='Put every panel back where it started';
+    r.type='button'; r.className='reset'; r.textContent='원위치';
+    r.title='모든 패널을 처음 위치로';
     d.appendChild(r);
     d.addEventListener('click',e=>{
       const b=e.target.closest('button'); if(!b) return;
@@ -125,7 +125,7 @@ const Panels=(function(){
       if(p.home.width) p.node.style.width=p.home.width+'px';
       collapse(p,false); show(p,true); anchorOf(p);
     });
-    say('Panels put back.');
+    say('패널을 원위치했습니다.');
   }
   function init(){
     if(ready) return;
@@ -161,5 +161,4 @@ const Panels=(function(){
           dragged:id=>{const p=LIST.find(x=>x.id===(id||'run')); return !!(p&&p.moved>6);},
           clearDrag:id=>{const p=LIST.find(x=>x.id===(id||'run')); if(p) p.moved=0;}};
 })();
-
 
