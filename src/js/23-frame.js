@@ -6,14 +6,15 @@ function onQualityChanged(quiet){
   const qs=document.getElementById('detail');
   if(qs)[...qs.children].forEach(b=>b.setAttribute('aria-pressed',
     String(b.dataset.q===(QUALITY.auto?'auto':QUALITY.name))));
-  if(!quiet) say('디테일을 '+josa(QUALITY.now.label.toLowerCase(),'으로','로')+' 정했습니다.');
+  if(!quiet) say('디테일을 '+QUALITY.now.label.toLowerCase()+josa(QUALITY.now.label.toLowerCase(),'으로','로')+' 정했습니다.');
 }
 function stepDown(){
   const order=['high','mid','low'];
   const i=order.indexOf(QUALITY.name);
   if(i<0||i>=order.length-1) return false;
   applyQuality(order[i+1],true);
-  say('프레임이 떨어져 디테일을 '+josa(QUALITY.now.label.toLowerCase(),'으로','로')+
+  const ql=QUALITY.now.label.toLowerCase();
+  say('프레임이 떨어져 디테일을 '+ql+josa(ql,'으로','로')+
       ' 낮췄습니다. 원치 않으면 디테일 설정에서 직접 바꾸세요.');
   return true;
 }
