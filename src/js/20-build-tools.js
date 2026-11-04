@@ -124,24 +124,24 @@ function doPlace(px,py){
   if(def.sculpt) return;
   if(tool==='remove'){
     const r=nearestPlaced(hit.x,hit.z,7);
-    if(r){ removeRec(r); indexBuild(); say('Taken away. '+placed.length+' pieces still standing.'); }
-    else say('Nothing of yours within reach of that.');
+    if(r){ removeRec(r); indexBuild(); say('치웠습니다. 아직 '+placed.length+'개가 서 있습니다.'); }
+    else say('그곳에서 닿는 거리에 지은 것이 없습니다.');
     return;
   }
   if(def.line){
     if(!anchor){ anchor={x:hit.x,z:hit.z};
-      say('Now click where the '+def.label.toLowerCase()+' should end.'+
-          (tool==='wall'?' , or . flips the parapet side.':'')); return; }
+      say('이제 '+def.label+'이(가) 끝날 곳을 클릭하세요.'+
+          (tool==='wall'?' , 또는 . 로 난간 쪽을 바꿉니다.':'')); return; }
     const rec=place(tool,0,0,0,anchor,hit,ghostFlip);
     if(rec){ pushHistory({t:'place',rec:rec}); notePlaced(tool); }
     anchor=null; lineGhost.visible=false; ghostArrow.visible=false;
     if(rec){ indexBuild(); say(def.tip||''); }
-    else say('Too short to build. Try two points further apart.');
+    else say('짧아서 지을 수 없습니다. 두 점을 더 멀리 잡아 보세요.');
     return;
   }
   if(!canPlace(hit.x,hit.z)){
-    say(PIECES[tool].water?'A jetty needs dry bank behind it and open water ahead. Turn it with , and .'
-        :(wet(hit.x,hit.z)?'That ground is under water.':'Something is already standing there.'));
+    say(PIECES[tool].water?'부교는 뒤로 마른 강변, 앞으로 열린 물이 필요합니다. , 와 . 로 돌리세요.'
+        :(wet(hit.x,hit.z)?'그 땅은 물 아래입니다.':'그곳에는 이미 무언가 서 있습니다.'));
     return;
   }
   const rec=place(tool,hit.x,hit.z,ghostRot,null,null,false,ghostScale);
@@ -161,19 +161,18 @@ function undo(){
   const h=history.pop();
   if(!h){
     if(placed.length){ removeRec(placed[placed.length-1]); indexBuild();
-                       say('Undone. '+placed.length+' pieces standing.'); }
-    else say('Nothing to undo.');
+                       say('되돌렸습니다. '+placed.length+'개가 서 있습니다.'); }
+    else say('되돌릴 것이 없습니다.');
     return;
   }
   if(h.t==='place'){
     removeRec(h.rec); indexBuild();
-    say('Undone. '+placed.length+' pieces standing.');
+    say('되돌렸습니다. '+placed.length+'개가 서 있습니다.');
   }else{
     EDIT.set(h.data); shapeTerrain(); rebuildAll(); reseatScenery(); indexBuild();
-    say('That cut undone.');
+    say('그 깎기를 되돌렸습니다.');
   }
 }
 function afterSculpt(){
   rebuildAll(); reseatScenery(); indexBuild();
 }
-
